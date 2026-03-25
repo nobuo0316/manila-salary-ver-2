@@ -32,7 +32,7 @@ TEXT = {
         "level": "レベル",
         "salary_range": "月給（目安）",
         "entry_desc": "初級職・事務職・補助的業務を想定",
-        "supervisor_desc": "中堅職・技術職・監督職相当を想定",
+        "middle manager_desc": "中堅職・技術職・監督職相当を想定",
         "manager_desc": "管理職・上位専門職を想定",
         "region_info_title": "選択地区の前提データ",
         "coef_result": "適用係数",
@@ -102,7 +102,7 @@ TEXT = {
         "level": "Level",
         "salary_range": "Indicative Monthly Salary",
         "entry_desc": "Assumes junior, clerical, and support roles",
-        "supervisor_desc": "Assumes mid-level, technical, and supervisory-equivalent roles",
+        "middle manager_desc": "Assumes mid-level, technical, and middle managery-equivalent roles",
         "manager_desc": "Assumes managerial and higher-level professional roles",
         "region_info_title": "Selected location assumptions",
         "coef_result": "Applied coefficient",
@@ -163,7 +163,7 @@ TEXT = {
 # -----------------------------
 BASE_RANGES = {
     "Entry": (16000, 23000),
-    "Supervisor": (28000, 40000),
+    "middle manager": (28000, 40000),
     "Manager": (50000, 70000),
 }
 
@@ -358,16 +358,16 @@ st.caption(basis_text)
 # -----------------------------
 st.subheader(T["summary_title"])
 entry_desc = T["entry_desc"]
-supervisor_desc = T["supervisor_desc"]
+middle manager_desc = T["middle manager_desc"]
 manager_desc = T["manager_desc"]
 card_desc = {
     "Entry": entry_desc,
-    "Supervisor": supervisor_desc,
+    "middle manager": middle manager_desc,
     "Manager": manager_desc,
 }
 
 col1, col2, col3 = st.columns(3)
-for col, level in zip([col1, col2, col3], ["Entry", "Supervisor", "Manager"]):
+for col, level in zip([col1, col2, col3], ["Entry", "middle manager", "Manager"]):
     low, high = scaled_ranges[level]
     with col:
         st.markdown(
