@@ -31,9 +31,9 @@ TEXT = {
         "summary_title": "最終まとめ（政府データ100%ベースの目安）",
         "level": "レベル",
         "salary_range": "月給（目安）",
-        "entry_desc": "初級職・事務職・補助的業務を想定",
-        "supervisor_desc": "中堅職・技術職・監督職相当を想定",
-        "manager_desc": "管理職・上位専門職を想定",
+        "entry(G6,G5)_desc": "初級職・事務職・補助的業務を想定",
+        "supervisor(G4,G3)_desc": "中堅職・技術職・監督職相当を想定",
+        "manager(G3)_desc": "管理職・上位専門職を想定",
         "region_info_title": "選択地区の前提データ",
         "coef_result": "適用係数",
         "basis_title": "係数の算出ロジック",
@@ -101,9 +101,9 @@ TEXT = {
         "summary_title": "Final Summary (100% government-data-based baseline)",
         "level": "Level",
         "salary_range": "Indicative Monthly Salary",
-        "entry_desc": "Assumes junior, clerical, and support roles",
-        "supervisor_desc": "Assumes mid-level, technical, and supervisory-equivalent roles",
-        "manager_desc": "Assumes managerial and higher-level professional roles",
+        "entry(G6,G5)_desc": "Assumes junior, clerical, and support roles",
+        "supervisor(G4,G3)_desc": "Assumes mid-level, technical, and supervisory-equivalent roles",
+        "manager(G3)_desc": "Assumes managerial and higher-level professional roles",
         "region_info_title": "Selected location assumptions",
         "coef_result": "Applied coefficient",
         "basis_title": "Coefficient logic",
@@ -357,13 +357,13 @@ st.caption(basis_text)
 # Summary cards
 # -----------------------------
 st.subheader(T["summary_title"])
-entry_desc = T["entry_desc"]
-supervisor_desc = T["supervisor_desc"]
-manager_desc = T["manager_desc"]
+entry(G6,G5)_desc = T["entry(G6,G5)_desc"]
+supervisor(G4,G3)_desc = T["supervisor(G4,G3)_desc"]
+manager(G3)_desc = T["manager(G3)_desc"]
 card_desc = {
-    "Entry": entry_desc,
-    "Supervisor": supervisor_desc,
-    "Manager": manager_desc,
+    "Entry": entry(G6,G5)_desc,
+    "Supervisor": supervisor(G4,G3)_desc,
+    "Manager": manager(G3)_desc,
 }
 
 col1, col2, col3 = st.columns(3)
