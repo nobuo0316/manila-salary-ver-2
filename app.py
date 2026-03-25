@@ -31,9 +31,9 @@ TEXT = {
         "summary_title": "最終まとめ（政府データ100%ベースの目安）",
         "level": "レベル",
         "salary_range": "月給（目安）",
-        "entry_desc": "初級職・事務職・補助的業務を想定",
-        "supervisor_desc": "中堅職・技術職・監督職相当を想定",
-        "manager_desc": "管理職・上位専門職を想定",
+        "entry_label": "Entry（G6, G5）",
+        "supervisor_label": "Supervisor（G4）",
+        "manager_label": "Manager（G3）",
         "region_info_title": "選択地区の前提データ",
         "coef_result": "適用係数",
         "basis_title": "係数の算出ロジック",
@@ -101,9 +101,9 @@ TEXT = {
         "summary_title": "Final Summary (100% government-data-based baseline)",
         "level": "Level",
         "salary_range": "Indicative Monthly Salary",
-        "entry_desc": "Assumes junior, clerical, and support roles",
-        "supervisor_desc": "Assumes mid-level, technical, and supervisory-equivalent roles",
-        "manager_desc": "Assumes managerial and higher-level professional roles",
+        "entry_label": "Entry (G6, G5)",
+        "supervisor_label": "Supervisor (G4)",
+        "manager_label": "Manager (G3)",
         "region_info_title": "Selected location assumptions",
         "coef_result": "Applied coefficient",
         "basis_title": "Coefficient logic",
@@ -367,13 +367,19 @@ card_desc = {
 }
 
 col1, col2, col3 = st.columns(3)
+label_map = {
+    "Entry": T["entry_label"],
+    "Supervisor": T["supervisor_label"],
+    "Manager": T["manager_label"],
+}
+
 for col, level in zip([col1, col2, col3], ["Entry", "Supervisor", "Manager"]):
     low, high = scaled_ranges[level]
     with col:
         st.markdown(
             f"""
             <div class='salary-card'>
-                <div class='salary-level'>{level}</div>
+                <div class='salary-level'>{label_map[level]}</div>
                 <div class='salary-range'>{fmt_range(low, high)}</div>
                 <div class='salary-desc'>{card_desc[level]}</div>
             </div>
