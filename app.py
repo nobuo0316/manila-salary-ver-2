@@ -90,7 +90,7 @@ TEXT = {
         "proxy_notes_manila": "NCR を Manila の基準値として利用",
         "proxy_notes_davao": "Davao Region を Davao の基準値として利用",
         "grade6_title": "Grade6 Step1 の考え方",
-        "grade6_body": f"このページでは、各エリアの最低月給（Grade6 Step1）を **最低日給 × {WORK_DAYS_PER_MONTH}日** で算出しています。",
+        "grade6_body": f"各エリアの最低月給（Grade6 Step1）を **最低日給 × {WORK_DAYS_PER_MONTH}日** で算出しています。",
         "grade6_formula": "計算式",
         "grade6_example": "選択地区の計算結果",
         "selected_region": "選択地区",
