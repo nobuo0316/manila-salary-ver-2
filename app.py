@@ -10,6 +10,7 @@ st.set_page_config(
     layout="wide",
 )
 
+WORK_DAYS_PER_MONTH = 25
 
 # -----------------------------
 # Text / i18n
@@ -41,13 +42,14 @@ TEXT = {
         "basis_min_wage": "地区の最低賃金 ÷ Manila(NCR) の最低賃金で係数を算出します。",
         "basis_blended": "(最低賃金比率 × 50%) + (物価指数 × 50%) で係数を算出します。",
         "assumption_title": "このページの前提",
-        "assumption_body": dedent("""
+        "assumption_body": dedent(f"""
         - これは **政府の公開データのみ** を中心に整理した参考ページです。
         - ベースレンジは PSA（Philippine Statistics Authority）の **2024 Occupational Wages Survey (OWS)** をもとにした Manila 想定レンジです。
         - 地区補正は NWPC（National Wages and Productivity Commission）の **地域別最低賃金** を使って調整できるようにしています。
         - Tawi-Tawi は単独地域統計ではなく、**BARMM の最低賃金を代理値**として使っています。
         - General Santos は **Region XII / SOCCSKSARGEN** の最低賃金を代理値として使っています。
         - 物価指数は公式の地域CPIや任意の生活コスト指数を入れられるようにしてあります。
+        - 各エリアの **最低月給（Grade6 Step1）** は、**最低日給 × {WORK_DAYS_PER_MONTH}日** で算出しています。
         - 表示レンジは **基本給＋定額手当ベース** の参考値であり、残業代・賞与・インセンティブ等は含みません。
         """),
         "flow_title": "算出までの流れ",
@@ -56,7 +58,8 @@ TEXT = {
             "2. 地区を選択",
             "3. 手入力係数、または最低賃金比率 / 最低賃金＋物価指数から係数を算出",
             "4. 基準レンジに係数を掛けて、地区別の参考レンジを表示",
-            "5. ソースURLと代理値の前提をページ下部に補足",
+            f"5. 各地区の最低月給（Grade6 Step1）は最低日給 × {WORK_DAYS_PER_MONTH}日で表示",
+            "6. ソースURLと代理値の前提をページ下部に補足",
         ],
         "source_title": "根拠ソース",
         "source_intro": "以下はページ内の説明に対応する主要ソースです。",
@@ -69,9 +72,10 @@ TEXT = {
         "source_label_7": "NWPC: Region XII 最低賃金（General Santos の代理値）",
         "source_label_8": "PSA OpenSTAT: 参照対象テーブル例（OWS）",
         "notes_title": "注意点",
-        "notes_body": dedent("""
+        "notes_body": dedent(f"""
         - Manila 以外のレンジは **地区係数による換算値** です。
         - Tawi-Tawi と General Santos は、このページでは **地域単位の公的賃金データを代理値として使用**しています。
+        - 各地区の **最低月給（Grade6 Step1）** は、**最低日給 × {WORK_DAYS_PER_MONTH}日** の簡易計算です。
         - 物価指数を併用する場合、係数はあくまで社内試算用の補正値です。
         - 厳密な採用提示額や等級設計には、求人市場データや自社制度も併用してください。
         """),
@@ -79,11 +83,17 @@ TEXT = {
         "table_region": "地区",
         "table_proxy": "使用データ",
         "table_min_wage": "最低賃金（日額・非農業）",
+        "table_min_monthly": "最低月給（Grade6 Step1）",
         "table_notes": "補足",
         "proxy_notes_tawi": "Tawi-Tawi 単独ではなく BARMM の公的最低賃金を利用",
         "proxy_notes_gensan": "General Santos 単独ではなく Region XII の公的最低賃金を利用",
         "proxy_notes_manila": "NCR を Manila の基準値として利用",
         "proxy_notes_davao": "Davao Region を Davao の基準値として利用",
+        "grade6_title": "Grade6 Step1 の考え方",
+        "grade6_body": f"このページでは、各エリアの最低月給（Grade6 Step1）を **最低日給 × {WORK_DAYS_PER_MONTH}日** で算出しています。",
+        "grade6_formula": "計算式",
+        "grade6_example": "選択地区の計算結果",
+        "selected_region": "選択地区",
     },
     "en": {
         "page_title": "📊 Regional Salary Range Summary (Government-Data Based)",
@@ -111,13 +121,14 @@ TEXT = {
         "basis_min_wage": "Coefficient is derived from: selected location minimum wage ÷ Manila (NCR) minimum wage.",
         "basis_blended": "Coefficient is derived from: (minimum wage ratio × 50%) + (price index × 50%).",
         "assumption_title": "Key assumptions behind this page",
-        "assumption_body": dedent("""
+        "assumption_body": dedent(f"""
         - This page is built primarily from **public government data only**.
         - The baseline salary bands are Manila-oriented ranges reconstructed from the PSA **2024 Occupational Wages Survey (OWS)**.
         - Regional adjustments can be made using NWPC **regional minimum wage** data.
         - Tawi-Tawi uses **BARMM minimum wage** as a proxy because a standalone public wage table is not directly provided here.
         - General Santos uses **Region XII / SOCCSKSARGEN minimum wage** as a proxy.
         - The price index field allows an official regional CPI proxy or an internally chosen cost-of-living index.
+        - The **minimum monthly salary (Grade6 Step1)** for each area is calculated as **daily minimum wage × {WORK_DAYS_PER_MONTH} days**.
         - The displayed ranges are **basic pay + regular cash allowances** references and exclude overtime, bonuses, and incentives.
         """),
         "flow_title": "How the ranges are derived",
@@ -126,7 +137,8 @@ TEXT = {
             "2. Select a location",
             "3. Choose manual coefficient or auto-calculate from minimum wage ratio / minimum wage + price index",
             "4. Apply the coefficient to the baseline salary ranges",
-            "5. Show source URLs and proxy assumptions below",
+            f"5. Show the minimum monthly salary (Grade6 Step1) as daily minimum wage × {WORK_DAYS_PER_MONTH} days",
+            "6. Show source URLs and proxy assumptions below",
         ],
         "source_title": "Source links",
         "source_intro": "Main sources referenced in this page:",
@@ -139,9 +151,10 @@ TEXT = {
         "source_label_7": "NWPC: Region XII minimum wage (proxy for General Santos)",
         "source_label_8": "PSA OpenSTAT: Example OWS table referenced",
         "notes_title": "Notes",
-        "notes_body": dedent("""
+        "notes_body": dedent(f"""
         - Salary ranges outside Manila are **coefficient-adjusted estimates**.
         - In this page, Tawi-Tawi and General Santos use **regional public wage proxies** rather than city-only official salary tables.
+        - The **minimum monthly salary (Grade6 Step1)** is calculated simply as **daily minimum wage × {WORK_DAYS_PER_MONTH} days**.
         - If a price index is added, the result should still be treated as an internal planning estimate.
         - For actual hiring offers or grading design, combine this with market salary benchmarks and your internal framework.
         """),
@@ -149,11 +162,17 @@ TEXT = {
         "table_region": "Location",
         "table_proxy": "Data used",
         "table_min_wage": "Minimum wage (daily, non-agri)",
+        "table_min_monthly": "Minimum monthly salary (Grade6 Step1)",
         "table_notes": "Notes",
         "proxy_notes_tawi": "Uses BARMM public minimum wage as proxy for Tawi-Tawi",
         "proxy_notes_gensan": "Uses Region XII public minimum wage as proxy for General Santos",
         "proxy_notes_manila": "Uses NCR as Manila baseline",
         "proxy_notes_davao": "Uses Davao Region as Davao baseline",
+        "grade6_title": "How Grade6 Step1 is calculated",
+        "grade6_body": f"In this page, the minimum monthly salary (Grade6 Step1) for each area is calculated as **daily minimum wage × {WORK_DAYS_PER_MONTH} days**.",
+        "grade6_formula": "Formula",
+        "grade6_example": "Calculated result for selected area",
+        "selected_region": "Selected region",
     },
 }
 
@@ -167,7 +186,7 @@ BASE_RANGES = {
     "Manager": (50000, 70000),
 }
 
-# Minimum wage defaults (current values as of Mar 26, 2026 where applicable)
+# Minimum wage defaults
 # Non-agriculture daily minimum wage.
 REGIONS = {
     "Manila": {
@@ -217,8 +236,16 @@ def fmt_php(v: float) -> str:
     return f"₱{v:,.0f}"
 
 
+def fmt_php_precise(v: float) -> str:
+    return f"₱{v:,.2f}"
+
+
 def fmt_range(low: float, high: float) -> str:
     return f"{fmt_php(low)} – {fmt_php(high)}"
+
+
+def calc_min_monthly(min_wage_daily: float) -> float:
+    return min_wage_daily * WORK_DAYS_PER_MONTH
 
 
 # -----------------------------
@@ -288,6 +315,8 @@ scaled_ranges = {
     for k, v in BASE_RANGES.items()
 }
 
+selected_min_monthly = calc_min_monthly(selected_min_wage)
+
 
 # -----------------------------
 # Styling
@@ -324,6 +353,14 @@ st.markdown(
         font-size: 0.95rem;
         color: #555;
     }
+    .formula-box {
+        padding: 1rem 1.1rem;
+        border: 1px solid rgba(120,120,120,.18);
+        border-radius: 16px;
+        background: #fafafa;
+        margin-top: 0.75rem;
+        margin-bottom: 0.75rem;
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -342,15 +379,38 @@ st.markdown(
 # -----------------------------
 # Top info
 # -----------------------------
-info_col1, info_col2, info_col3 = st.columns(3)
+info_col1, info_col2, info_col3, info_col4 = st.columns(4)
 with info_col1:
     st.metric(T["coef_result"], f"{applied_coef:.2f}x")
 with info_col2:
     st.metric(T["table_min_wage"], fmt_php(selected_min_wage))
 with info_col3:
     st.metric("Min wage ratio vs Manila", f"{min_wage_ratio:.2f}x")
+with info_col4:
+    st.metric(T["table_min_monthly"], fmt_php(selected_min_monthly))
 
 st.caption(basis_text)
+
+
+# -----------------------------
+# Grade 6 Step 1 explanation
+# -----------------------------
+st.subheader(T["grade6_title"])
+st.markdown(T["grade6_body"])
+
+selected_region_name = REGIONS[region]["display_ja"] if lang == "ja" else REGIONS[region]["display_en"]
+st.markdown(
+    f"""
+    <div class='formula-box'>
+        <strong>{T["grade6_formula"]}</strong><br>
+        {T["table_min_monthly"]} = {T["table_min_wage"]} × {WORK_DAYS_PER_MONTH}<br><br>
+        <strong>{T["grade6_example"]}</strong><br>
+        {T["selected_region"]}: {selected_region_name}<br>
+        {fmt_php_precise(selected_min_wage)} × {WORK_DAYS_PER_MONTH} = <strong>{fmt_php_precise(selected_min_monthly)}</strong>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
 
 # -----------------------------
@@ -390,6 +450,7 @@ region_df = {
     T["table_region"]: [REGIONS[k]["display_ja"] if lang == "ja" else REGIONS[k]["display_en"] for k in REGIONS],
     T["table_proxy"]: [REGIONS[k]["source_type"] for k in REGIONS],
     T["table_min_wage"]: [fmt_php(REGIONS[k]["min_wage"]) for k in REGIONS],
+    T["table_min_monthly"]: [fmt_php(calc_min_monthly(REGIONS[k]["min_wage"])) for k in REGIONS],
     T["table_notes"]: [REGIONS[k]["note_ja"] if lang == "ja" else REGIONS[k]["note_en"] for k in REGIONS],
 }
 st.table(region_df)
